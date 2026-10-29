@@ -9,6 +9,8 @@
   <script>
     // เว็บย้ายไป /hr-paper-mill/ — พาไปหน้าเดิมในที่ใหม่ (เก็บ path, query และ #hash ไว้)
     (function () {
+      // ภายใน /softlight/ ที่ไม่มีหน้านั้น: กลับหน้าแรกของ softlight (ไม่ส่งไป HR Paper Mill)
+      if (/^\/softlight(\/|$)/.test(location.pathname)) { location.replace('/softlight/'); return; }
       var base = '/hr-paper-mill';
       var path = location.pathname === '/' ? '/' : location.pathname;
       location.replace(base + path + location.search + location.hash);
