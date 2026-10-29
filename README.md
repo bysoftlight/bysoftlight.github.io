@@ -1,5 +1,7 @@
 # bysoftlight.github.io
 
-พาลิงก์เดิมไปที่ https://bysoftlight.github.io/hr-paper-mill/ (เก็บ path เดิม เช่น `/staff.html` → `/hr-paper-mill/staff.html`)
+หน้าหลักของ softlight — Portfolio และบริการ (ถ่ายภาพ · กราฟิก · การตลาด · เว็บแอป)
 
-ตัวเว็บจริงอยู่ที่ repo [hr-paper-mill](https://github.com/bysoftlight/hr-paper-mill)
+- `index.html` · `css/site.css` · `js/site.js` (ข้อมูลผลงานอยู่ใน `WORKS` ด้านบนของไฟล์)
+- ภาพผลงาน `img/work/*.webp` (ย่อจากพอร์ตโฟลิโอ)
+- ลิงก์เก่าของ HR Paper Mill ส่งต่อไป `/hr-paper-mill/` (`404.html` และ `#form/#history/#account` บนหน้าแรก)
