@@ -134,7 +134,10 @@ button { font: inherit; }
 .tag.is-ok { background: var(--ok-soft); color: var(--ok); }
 .tag.is-accent { background: var(--accent-soft); color: var(--on-accent-soft); }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.product-media-ic { align-items: center; padding: 20px; color: var(--accent); background: linear-gradient(135deg, var(--accent-soft), var(--container) 70%); }
+.product-media-ic .ic { width: 72px; height: 72px; stroke-width: 1.4; }
 .product.is-soon { opacity: .82; }
+.product.is-soon .product-media-ic { color: var(--muted); background: var(--container); }
 .product.is-soon .product-media { min-height: 160px; align-items: center; color: var(--muted); }
 .product.is-soon .product-media .ic { width: 56px; height: 56px; stroke-width: 1.5; }
 
