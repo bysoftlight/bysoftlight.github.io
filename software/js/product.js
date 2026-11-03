@@ -14,7 +14,9 @@
     // ระบบหลังบ้านของ HR Paper Mill (เหมือน js/config.js ของแอป)
     const API = (() => { try { return { url: atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J6X0ozZ1RyLTlPcUJ0LVpMOTBoZWtOcFQ1bVN1Q29NX0Qzcm5RSnlYa3JqSXdaQnZNd0xHSGdCVHdfZGtLZXRGQy0vZXhlYw=='), secret: atob('TVlfU1VQRVJfU0VDUkVUX0tFWV8yMDI2') }; } catch (e) { return null; } })();
     const EMAIL = 'contact.oannob@gmail.com';
-    const CACHE = 'SL_HRPM_PLANS';
+    const CACHE = 'SL_HRPM_PLANS_V2';
+    // ระบบหลังบ้านที่ยังเป็น Billing.gs รุ่นแรก (แพลน Starter 990 / Pro 2,490 ที่ไม่ได้แก้) = ราคาเก่า → ใช้ราคาปัจจุบันด้านล่างแทน
+    const legacy = plans => { const sig = plans.map(p => p.id + ':' + p.priceMonthly).sort().join('|'); return /starter:990/.test(sig) && /pro:2490/.test(sig); };
     const DEFAULT = {
         plans: [
             { id: 'lite', name: 'Lite', tagline: 'เริ่มต้นสำหรับโครงการไม่เกิน 50 คน', priceMonthly: 1900, priceYearly: 19000, setupFee: 5000, maxUsers: 50, maxStaff: 3, trialDays: 30, highlight: false, fromPrice: false,
@@ -153,10 +155,15 @@
             const res = await fetch(API.url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'plans.public', secret: API.secret }), signal: ctl.signal });
             clearTimeout(t);
             const r = await res.json();
-            if (r && r.success && Array.isArray(r.plans) && r.plans.length) {
+            if (r && r.success && Array.isArray(r.plans) && r.plans.length && !legacy(r.plans)) {
                 data = { plans: r.plans, accounts: r.accounts || [], trialDays: r.trialDays || 30, contact: r.contact || {} };
                 live = true;
                 try { localStorage.setItem(CACHE, JSON.stringify(data)); } catch (e) {}
+                render();
+            } else if (r && r.success && Array.isArray(r.accounts) && r.accounts.length) {
+                // แพลนยังเป็นรุ่นเก่า: ใช้ราคาปัจจุบัน แต่ยังแสดงบัญชีรับเงินจากระบบ
+                data = Object.assign({}, DEFAULT, { accounts: r.accounts, contact: r.contact || {} });
+                live = true;
                 render();
             }
         } catch (e) { /* ใช้ข้อมูลที่จำไว้ / ชุดตั้งต้น */ }
