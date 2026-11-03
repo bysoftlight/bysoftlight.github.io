@@ -44,21 +44,27 @@ button { font: inherit; }
 /* ---------- แถบบน (เหมือนหน้าข้อมูลของ HR Paper Mill) ---------- */
 .topbar { position: sticky; top: 0; z-index: 30; background: var(--topbar); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); border-bottom: 1px solid var(--line-soft); }
 .topbar-in { display: flex; align-items: center; gap: 8px; min-height: 64px; padding-top: env(safe-area-inset-top); }
-.brand { flex: none; display: inline-flex; align-items: center; gap: 10px; padding: 4px 6px 4px 0; border-radius: 10px; color: var(--ink); text-decoration: none; font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
-.brand img { width: 30px; height: 30px; }
-.brand small { font-size: 12px; font-weight: 500; color: var(--muted); padding: 2px 8px; border-radius: 999px; background: var(--container); }
+.back { flex: none; display: inline-grid; place-items: center; width: 40px; height: 40px; margin-left: -8px; border-radius: 999px; color: var(--muted); text-decoration: none; transition: background-color .15s, color .15s; }
+.back .ic { width: 22px; height: 22px; }
+@media (hover: hover) { .back:hover { background: var(--container); color: var(--ink); } }
+.brand { flex: none; display: inline-flex; align-items: center; gap: 8px; margin-right: 12px; padding: 4px 6px 4px 0; border-radius: 10px; color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.brand img { width: 28px; height: 28px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .brand img, :root:not([data-theme="light"]) .foot-brand img.sl { filter: invert(1); } }
-.topnav { flex: 1 1 auto; min-width: 0; display: flex; justify-content: flex-end; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
+.topnav { flex: 1 1 auto; min-width: 0; margin-left: auto; display: flex; justify-content: flex-end; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; scroll-behavior: smooth; }
 .topnav::-webkit-scrollbar { display: none; }
 .topnav a { flex: none; padding: 8px 14px; border-radius: 999px; color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; }
 .topnav a[aria-current="page"] { background: var(--accent-soft); color: var(--on-accent-soft); font-weight: 600; }
 .topnav a.nav-cta { background: var(--accent); color: var(--on-accent); font-weight: 600; margin-left: 4px; }
 @media (hover: hover) { .topnav a:hover:not([aria-current]):not(.nav-cta) { background: var(--container); color: var(--ink); } .topnav a.nav-cta:hover { background: var(--accent-hover); } }
+/* เมนูที่เลื่อนแนวนอนได้: ขอบที่ยังมีเมนูซ่อนอยู่จางลง (เหมือนหน้าข้อมูลของ HR Paper Mill) */
+[data-scrollfade] { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-l, 0px), #000 calc(100% - var(--fade-r, 0px)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-l, 0px), #000 calc(100% - var(--fade-r, 0px)), transparent 100%); }
 @media (max-width: 599px) {
-    .brand small { display: none; }
-    .brand { font-size: 17px; }
-    .topnav a { padding: 8px 11px; font-size: 13.5px; }
-    .topnav a.nav-cta { display: none; }
+    .topbar-in { min-height: 60px; gap: 4px; }
+    .brand span { display: none; }
+    .brand { margin-right: 6px; padding: 4px; }
+    .topnav { justify-content: flex-start; }
+    .topnav a { padding: 8px 12px; font-size: 13.5px; }
+    .topnav a.nav-cta { background: none; color: var(--muted); font-weight: 500; margin-left: 0; }
 }
 
 /* ---------- ปุ่ม ---------- */
@@ -90,7 +96,7 @@ button { font: inherit; }
 @media (min-width: 960px) { .hero { padding: 72px 0 64px; } }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; align-items: center; }
 @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; } }
-.hero h1 { font-size: clamp(34px, 7.4vw, 58px); line-height: 1.15; font-weight: 500; letter-spacing: -.02em; }
+.hero h1 { font-size: clamp(28px, 8.2vw, 58px); line-height: 1.18; font-weight: 500; letter-spacing: -.02em; }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .hero-lead { margin-top: 18px; max-width: 46ch; font-size: clamp(16.5px, 2.4vw, 19px); line-height: 1.7; color: var(--ink-2); }
 .hero .row-btns { margin-top: 28px; }
@@ -302,3 +308,36 @@ button { font: inherit; }
 .x-title { font-size: 30px; font-weight: 500; line-height: 1.25; margin-bottom: 6px; }
 .x-foot { display: flex; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 @media print { .topbar, .pkg-bar, .pkg-cta, .pay-copy, .foot, .cta-band { display: none !important; } .rv { opacity: 1 !important; transform: none !important; } .pkg-card, .card { break-inside: avoid; } }
+
+/* ---------- เปรียบเทียบแพ็กเกจบนมือถือ: เลือกทีละแพ็กเกจ · ฟังก์ชันเสริมเป็นการ์ด ---------- */
+.cmp-m { display: none; }
+.cmp-m-tabs { display: flex; padding: 4px; gap: 4px; border-radius: 999px; background: var(--container); margin-bottom: 12px; }
+.cmp-m-tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font-size: 15px; font-weight: 500; cursor: pointer; }
+.cmp-m-tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0, 0, 0, .14); }
+.cmp-m-list { margin: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
+.cmp-m-list div { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 16px; border-bottom: 1px solid var(--line-soft); }
+.cmp-m-list div:last-child { border-bottom: 0; }
+.cmp-m-list dt { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; min-width: 0; }
+.cmp-m-list dd { margin: 0; flex: none; max-width: 48%; text-align: right; font-weight: 600; font-size: 15px; }
+.cmp-m-list dd .ic { width: 20px; height: 20px; color: var(--ok); vertical-align: middle; }
+.cmp-m-list dd .no { color: var(--muted); font-weight: 500; font-size: 13.5px; }
+@media (max-width: 719px) {
+    main .cmp-desk { display: none; }
+    main .cmp-m { display: block; }
+    /* ฟังก์ชันเสริม: แถวละการ์ด — ชื่อเต็มบรรทัด แล้วระยะเวลา · ราคา */
+    main #pkgAddons thead { display: none; }
+    main #pkgAddons, main #pkgAddons tbody { display: block; }
+    main #pkgAddons tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 14px 16px; border-bottom: 1px solid var(--line-soft); }
+    main #pkgAddons tr:last-child { border-bottom: 0; }
+    main #pkgAddons td { padding: 0; border: 0; }
+    main #pkgAddons .ad-n { display: none; }
+    main #pkgAddons .ad-name { grid-column: 1 / -1; font-size: 15px; line-height: 1.5; }
+    main #pkgAddons .ad-name b { font-weight: 600; }
+    main #pkgAddons .included { margin-top: 4px; }
+    main #pkgAddons .ad-time { color: var(--muted); font-size: 13.5px; }
+    main #pkgAddons .ad-time::before { content: "ใช้เวลา "; }
+    main #pkgAddons .ad-price { font-weight: 600; font-size: 15px; }
+    main #pkgMa td { padding: 12px 14px; }
+}
+.export .cmp-m { display: none !important; }
+.export .cmp-desk { display: block !important; }
