@@ -1,4 +1,27 @@
-// softlight Software — สคริปต์ร่วมทุกหน้า: ภาพเคลื่อนไหวตอนเลื่อน (ปิดเองเมื่อเครื่องตั้งลดการเคลื่อนไหว)
+// softlight Software — สคริปต์ร่วมทุกหน้า: แถบเมนูบน (ย้อนกลับ · เมนูหน้าปัจจุบันอยู่กลางจอ · ขอบจาง) · ภาพเคลื่อนไหวตอนเลื่อน
+(() => {
+    // ย้อนกลับ: มาจากหน้าในเว็บนี้ = กลับไปหน้าเดิม · เปิดตรงจากลิงก์ = ไปหน้าแรก
+    const back = document.querySelector('[data-back]');
+    if (back) back.addEventListener('click', e => {
+        let same = false;
+        try { same = document.referrer && new URL(document.referrer).origin === location.origin; } catch (err) {}
+        if (same && history.length > 1) { e.preventDefault(); history.back(); }
+    });
+    // เมนูบนจอแคบเลื่อนแนวนอนได้: ให้หน้าปัจจุบันอยู่กลางแถบ · ขอบที่ยังมีเมนูซ่อนอยู่จางลง
+    const nav = document.querySelector('.topnav');
+    if (nav) {
+        const fade = () => { const max = nav.scrollWidth - nav.clientWidth; nav.style.setProperty('--fade-l', nav.scrollLeft > 2 ? '24px' : '0px'); nav.style.setProperty('--fade-r', max - nav.scrollLeft > 2 ? '24px' : '0px'); };
+        const center = () => {
+            const cur = nav.querySelector('a[aria-current="page"]');
+            if (cur && nav.scrollWidth > nav.clientWidth) { nav.style.scrollBehavior = 'auto'; nav.scrollLeft = cur.offsetLeft - nav.offsetLeft - (nav.clientWidth - cur.offsetWidth) / 2; nav.style.scrollBehavior = ''; }
+            fade();
+        };
+        nav.addEventListener('scroll', fade, { passive: true });
+        addEventListener('resize', center);
+        center();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(center);
+    }
+})();
 (() => {
     const SEL = '.sec-head, .card, .stat, .steps li, .pkg-card:not(.pkg-skel), .gallery figure, .x-sec, .faq details, .cta-band, .contact-card';
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;

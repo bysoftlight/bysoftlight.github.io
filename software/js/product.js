@@ -112,27 +112,35 @@
         renderAddons(list);
     }
 
+    // เปรียบเทียบแพ็กเกจ: จอกว้าง = ตาราง · มือถือ = เลือกทีละแพ็กเกจ (ไม่ต้องเลื่อนตารางซ้าย-ขวา)
+    let cmpSel = null;
     function renderCompare(list) {
-        const row = (label, fn) => `<tr><th scope="row">${label}</th>${list.map(p => `<td>${fn(p)}</td>`).join('')}</tr>`;
         const money = (p, k) => (p[k] ? (p.fromPrice ? 'เริ่มต้น ' : '') + baht(disc(p[k])) : (p.priceMonthly ? '-' : 'ติดต่อฝ่ายขาย'));
         const has = (p, ids) => (ids.includes(p.id) ? ic('check') : p.id === 'lite' || !['pro', 'enterprise'].includes(p.id) ? '<span class="no">ฟังก์ชันเสริม</span>' : '<span class="no">–</span>');
+        const rows = [
+            ['ราคา/เดือน', p => money(p, 'priceMonthly')],
+            ['ราคา/ปี', p => money(p, 'priceYearly')],
+            ['ค่าติดตั้ง (ครั้งเดียว)', p => (p.setupFee ? baht(p.setupFee) : '-')],
+            ['ผู้ใช้สิทธิ์', p => lim(p.maxUsers, 'คน')],
+            ['บัญชีเจ้าหน้าที่', p => lim(p.maxStaff, 'บัญชี')],
+            ['ส่งรายงาน รูป + GPS · แดชบอร์ด · ส่งออกไฟล์', () => ic('check')]
+        ].concat(ADDONS.map(a => [a[0], p => has(p, a[3])]), [
+            ['ดูแลระบบรายปี (MA)', p => (p.id === 'enterprise' ? ic('check') : '<span class="no">19,000/ปี</span>')],
+            ['ทดลองใช้ฟรี', p => `${p.trialDays || data.trialDays || 30} วัน`]
+        ]);
         $('pkgCmp').innerHTML = `<thead><tr><th scope="col"><span class="sr-only">รายการ</span></th>${list.map(p => `<th scope="col" class="${p.highlight ? 'is-hl' : ''}">${esc(p.name)}</th>`).join('')}</tr></thead><tbody>
-          ${row('ราคา/เดือน', p => money(p, 'priceMonthly'))}
-          ${row('ราคา/ปี', p => money(p, 'priceYearly'))}
-          ${row('ค่าติดตั้ง (ครั้งเดียว)', p => (p.setupFee ? baht(p.setupFee) : '-'))}
-          ${row('ผู้ใช้สิทธิ์', p => lim(p.maxUsers, 'คน'))}
-          ${row('บัญชีเจ้าหน้าที่', p => lim(p.maxStaff, 'บัญชี'))}
-          ${row('ส่งรายงาน รูป + GPS · แดชบอร์ด · ส่งออกไฟล์', () => ic('check'))}
-          ${ADDONS.map(a => row(esc(a[0]), p => has(p, a[3]))).join('')}
-          ${row('ดูแลระบบรายปี (MA)', p => (p.id === 'enterprise' ? ic('check') : '<span class="no">19,000/ปี</span>'))}
-          ${row('ทดลองใช้ฟรี', p => `${p.trialDays || data.trialDays || 30} วัน`)}</tbody>`;
+          ${rows.map(([label, fn]) => `<tr><th scope="row">${esc(label)}</th>${list.map(p => `<td>${fn(p)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+        if (!list.some(p => p.id === cmpSel)) cmpSel = (list.find(p => p.highlight) || list[0] || {}).id;
+        const sel = list.find(p => p.id === cmpSel) || list[0];
+        $('pkgCmpM').innerHTML = !sel ? '' : `<div class="cmp-m-tabs" role="tablist" aria-label="เลือกแพ็กเกจที่จะดู">${list.map(p => `<button type="button" role="tab" data-cmp="${esc(p.id)}" aria-selected="${p.id === sel.id}">${esc(p.name)}</button>`).join('')}</div>
+          <dl class="cmp-m-list">${rows.map(([label, fn]) => `<div><dt>${esc(label)}</dt><dd>${fn(sel)}</dd></div>`).join('')}</dl>`;
     }
 
     function renderAddons(list) {
         const ids = list.map(p => p.id);
         $('pkgAddons').innerHTML = `<thead><tr><th>#</th><th>ฟังก์ชัน</th><th>ระยะเวลาพัฒนา</th><th class="num">ราคา (บาท)</th></tr></thead><tbody>${ADDONS.map((a, i) => `<tr>
-            <td>${i + 1}</td><td>${esc(a[0])}${a[3].filter(x => ids.includes(x)).length ? ` <span class="included">รวมใน ${a[3].filter(x => ids.includes(x)).map(x => (list.find(p => p.id === x) || {}).name || x).join(' / ')}</span>` : ''}</td>
-            <td>${esc(a[1])}</td><td class="num">${num(a[2])}</td></tr>`).join('')}</tbody>`;
+            <td class="ad-n">${i + 1}</td><td class="ad-name"><b>${esc(a[0])}</b>${a[3].filter(x => ids.includes(x)).length ? ` <span class="included">รวมใน ${a[3].filter(x => ids.includes(x)).map(x => (list.find(p => p.id === x) || {}).name || x).join(' / ')}</span>` : ''}</td>
+            <td class="ad-time" data-label="ระยะเวลา">${esc(a[1])}</td><td class="num ad-price" data-label="ราคา">฿${num(a[2])}</td></tr>`).join('')}</tbody>`;
         $('pkgMa').innerHTML = `<thead><tr><th>รายการ</th><th class="num">ราคา (บาท)</th></tr></thead><tbody>${MA.map(m => `<tr><td>${esc(m[0])}${m[2] && ids.includes('enterprise') ? ` <span class="included">${esc(m[2])}</span>` : ''}</td><td class="num">${esc(m[1])}</td></tr>`).join('')}</tbody>`;
         $('pkgTerms').innerHTML = TERMS.map(t => `<li>${esc(t)}</li>`).join('');
     }
@@ -281,6 +289,7 @@
         $('pkgPng').addEventListener('click', e => busy(e.currentTarget, savePng));
         $('pkgPdf').addEventListener('click', e => busy(e.currentTarget, savePdf));
         $('pkgShare').addEventListener('click', share);
+        $('pkgCmpM').addEventListener('click', e => { const b = e.target.closest('[data-cmp]'); if (b) { cmpSel = b.dataset.cmp; renderCompare(visible()); } });
         $('pkgPay').addEventListener('click', async e => { const b = e.target.closest('[data-copy]'); if (b) toast((await copy(b.dataset.copy)) ? 'คัดลอกเลขบัญชีแล้ว' : b.dataset.copy); });
         // ลิงก์ข้อเสนอ: เปิดมาที่แพ็กเกจเลย
         if ((offer.to || offer.plans.length || offer.ref) && !location.hash) location.hash = 'packages';
