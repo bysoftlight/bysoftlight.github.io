@@ -11,6 +11,8 @@
     (function () {
       // ภายใน /softlight/ ที่ไม่มีหน้านั้น: กลับหน้าแรกของ softlight (ไม่ส่งไป HR Paper Mill)
       if (/^\/softlight(\/|$)/.test(location.pathname)) { location.replace('/softlight/'); return; }
+      // ภายใน /software/ (เว็บไซต์ผลิตภัณฑ์ softlight): กลับหน้าแรกของเว็บไซต์ผลิตภัณฑ์
+      if (/^\/software(\/|$)/.test(location.pathname)) { location.replace('/software/'); return; }
       var base = '/hr-paper-mill';
       var path = location.pathname === '/' ? '/' : location.pathname;
       location.replace(base + path + location.search + location.hash);
