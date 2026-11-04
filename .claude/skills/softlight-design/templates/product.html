@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ชื่อแอป — softlight</title>
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#131314" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Code:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/softlight.css">
+  <style>
+    /* เลย์เอาต์ของหน้านี้ — ใช้ token เท่านั้น */
+    .page { max-width: var(--wrap); margin: 0 auto; padding: var(--space-6) max(var(--gutter), env(safe-area-inset-right)) 120px max(var(--gutter), env(safe-area-inset-left)); display: grid; gap: var(--space-4); }
+    .head h1 { margin: 0; font-size: clamp(22px, 4vw, 32px); font-weight: 400; line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
+    .head p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+    .grid { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
+    @media (max-width: 767px) { .sl-topnav { display: none; } }
+    @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sl-bottomnav { display: none; } }
+    .sl-topbar { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top); }
+    .sl-bottomnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding-bottom: env(safe-area-inset-bottom); }
+  </style>
+</head>
+<body>
+  <header class="sl-topbar">
+    <a class="sl-brand" href="./"><img src="img/softlight-mark.png" alt="" width="28" height="28">softlight</a>
+    <nav class="sl-topnav" aria-label="เมนู"><a href="./" aria-current="page">Home</a><a href="#">Products</a><a class="sl-nav-cta" href="#">Contact</a></nav>
+  </header>
+  <main class="page">
+    <div class="head"><h1>ส่งรายงานการขาย</h1><p>ทำครบ 3 ขั้นตอน แล้วกดส่ง</p></div>
+    <div class="sl-banner sl-banner-warn"><svg class="sl-ic" aria-hidden="true"><use href="#i-info"/></svg><div><b>ข้อมูลไม่ถูกต้อง?</b>กรุณาติดต่อเจ้าหน้าที่ก่อนส่งรายงาน</div></div>
+    <div class="grid">
+      <section class="sl-card">
+        <h2 class="sl-card-title">ข้อมูลผู้ส่ง</h2>
+        <label class="sl-label" for="name">ชื่อ-นามสกุล</label>
+        <input class="sl-input" id="name" autocomplete="name" placeholder="เช่น สมชาย ใจดี">
+        <p class="sl-hint"><svg class="sl-ic sl-ic-16" aria-hidden="true"><use href="#i-info"/></svg> ใช้ชื่อเดียวกับบัตรประชาชน</p>
+      </section>
+      <section class="sl-card">
+        <h2 class="sl-card-title">สรุปเดือนนี้</h2>
+        <div class="sl-tiles"><div class="sl-tile"><span>ส่งแล้ว</span><b>17 วัน</b></div><div class="sl-tile"><span>ยังไม่ส่ง</span><b>3 วัน</b></div></div>
+      </section>
+    </div>
+    <button class="sl-btn sl-btn-primary sl-btn-block" type="button"><svg class="sl-ic" aria-hidden="true"><use href="#i-send"/></svg> ส่งรายงาน</button>
+  </main>
+  <nav class="sl-bottomnav" aria-label="เมนูหลัก">
+    <a class="sl-nav-item" href="#" aria-current="page"><svg class="sl-ic" aria-hidden="true"><use href="#i-send"/></svg><span>ส่งรายงาน</span></a>
+    <a class="sl-nav-item" href="#"><svg class="sl-ic" aria-hidden="true"><use href="#i-history"/></svg><span>ประวัติ</span></a>
+    <a class="sl-nav-item" href="#"><svg class="sl-ic" aria-hidden="true"><use href="#i-user"/></svg><span>บัญชี</span></a>
+  </nav>
+  <!-- วาง sprite ไอคอนจาก icons.svg ตรงนี้ (หรือ fetch แล้วแทรกท้าย body) -->
+</body>
+</html>

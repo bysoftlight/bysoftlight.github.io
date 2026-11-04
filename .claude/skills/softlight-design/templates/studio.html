@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="studio">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>softlight — Design studio</title>
+  <meta name="theme-color" content="#0A0A0B">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/softlight.css">
+  <style>
+    body { font-size: 16px; line-height: 1.65; }
+    .wrap { width: min(100% - 2 * max(16px, env(safe-area-inset-left)), var(--studio-max)); margin-inline: auto; }
+    .nav { position: sticky; top: env(safe-area-inset-top); z-index: 50; background: var(--topbar); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border-bottom: 1px solid var(--line); }
+    .nav .wrap { display: flex; align-items: center; gap: var(--space-3); height: var(--nav-h); }
+    .nav .sl-pillnav { display: none; } @media (min-width: 960px) { .nav .sl-pillnav { display: inline-flex; margin-inline: auto; } }
+    .hero { padding-block: clamp(48px, 10vw, 120px) clamp(40px, 8vw, 96px); text-align: center; }
+    .hero h1 { margin: 20px 0 0; font-size: clamp(40px, 9vw, 84px); line-height: 1.04; font-weight: 500; letter-spacing: -.035em; text-wrap: balance; }
+    .hero p { margin: 20px auto 0; max-width: 620px; font-size: clamp(15px, 2.2vw, 18px); color: var(--ink-2); }
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; }
+    .works { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); padding-block: var(--space-6) 96px; }
+    @media (min-width: 640px) { .works { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1000px) { .works { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header class="nav"><div class="wrap">
+    <a class="sl-brand" href="./"><img src="img/softlight-mark.png" alt="" width="32" height="32">softlight</a>
+    <nav class="sl-pillnav" aria-label="เมนู"><a href="#services" aria-current="true">Services</a><a href="#work">Work</a><a href="#packages">Packages</a><a href="#about">About</a></nav>
+    <a class="sl-btn sl-btn-sun" href="#contact">ติดต่อ <span class="sl-arrow"><svg class="sl-ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></a>
+  </div></header>
+  <main>
+    <section class="hero wrap">
+      <span class="sl-kicker">Design studio</span>
+      <h1>ออกแบบให้ <span class="sl-serif">ใช้ง่าย</span> และดูดี</h1>
+      <p>เว็บไซต์ แอป และแบรนด์ สำหรับธุรกิจที่อยากเริ่มให้ไว</p>
+      <div class="actions"><a class="sl-btn sl-btn-sun" href="#contact">เริ่มโปรเจกต์ <span class="sl-arrow"><svg class="sl-ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></a><a class="sl-btn sl-btn-ghost" href="#work">ดูผลงาน</a></div>
+    </section>
+    <section class="wrap" id="work">
+      <span class="sl-kicker">Work</span>
+      <h2 class="sl-sec-title">ผลงานที่ <span class="sl-serif">เลือกมา</span></h2>
+      <div class="works">
+        <a class="sl-work" href="#"><div class="sl-work-cover"><span class="sl-work-badge">ใหม่</span></div><div class="sl-work-meta"><small>Web app · 2026</small><b>HR Paper Mill</b><span>ระบบรายงานการขายประจำวัน</span></div></a>
+        <a class="sl-work" href="#"><div class="sl-work-cover"></div><div class="sl-work-meta"><small>Web app · 2026</small><b>Quotation</b><span>โปรแกรมใบเสนอราคา</span></div></a>
+        <a class="sl-work" href="#"><div class="sl-work-cover"></div><div class="sl-work-meta"><small>Web app · 2026</small><b>Finance</b><span>บัญชีรายรับรายจ่ายและภาษี</span></div></a>
+      </div>
+    </section>
+  </main>
+  <!-- วาง sprite ไอคอนจาก icons.svg ตรงนี้ -->
+</body>
+</html>
