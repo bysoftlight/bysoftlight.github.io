@@ -48,7 +48,7 @@
     color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]):not(.sl-studio) {
+  :root:not([data-theme]) {
     --ground: #131314;
     --surface: #1B1C1D;
     --field: #1F2022;
@@ -232,7 +232,8 @@ body { margin: 0; font: 400 15px/1.6 var(--font-sans); background: var(--ground)
 .sl-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 48px; padding: 0 var(--gutter);
   border: 1px solid transparent; border-radius: var(--radius-pill); font: 500 16px/1.2 var(--font-sans); text-decoration: none; cursor: pointer;
   -webkit-tap-highlight-color: transparent; transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s, transform .2s; }
-.sl-btn:disabled { cursor: not-allowed; }
+.sl-btn:disabled { cursor: not-allowed; opacity: .5; box-shadow: none; }
+.sl-btn-primary:disabled { opacity: 1; }
 .sl-btn-block { width: 100%; }
 .sl-btn-primary { min-height: 52px; border: 0; background: linear-gradient(135deg, var(--primary-hi), var(--primary)); color: var(--on-primary); }
 .sl-btn-primary:disabled { background: var(--not-ready); color: var(--ink-2); }
@@ -247,10 +248,10 @@ body { margin: 0; font: 400 15px/1.6 var(--font-sans); background: var(--ground)
 .sl-btn .sl-arrow .sl-ic { width: 14px; height: 14px; }
 @media (hover: hover) {
   .sl-btn-primary:not(:disabled):hover { background: linear-gradient(135deg, var(--primary-hover-hi), var(--primary-hover)); box-shadow: var(--shadow-button-hover); }
-  .sl-btn-outline:hover, .sl-btn-chip:not(:disabled):hover { background: var(--hover); }
-  .sl-btn-danger:hover { background: var(--bad-soft); }
+  .sl-btn-outline:not(:disabled):hover, .sl-btn-chip:not(:disabled):hover { background: var(--hover); }
+  .sl-btn-danger:not(:disabled):hover { background: var(--bad-soft); }
   .sl-btn-text:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .sl-btn-light:hover, .sl-btn-ghost:hover, .sl-btn-sun:hover { transform: translateY(-1px); }
+  .sl-btn-light:not(:disabled):hover, .sl-btn-ghost:not(:disabled):hover, .sl-btn-sun:not(:disabled):hover { transform: translateY(-1px); }
 }
 
 /* Input */
@@ -350,7 +351,7 @@ body { margin: 0; font: 400 15px/1.6 var(--font-sans); background: var(--ground)
 .sl-kicker { display: inline-flex; align-items: center; gap: var(--space-2); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sun); }
 .sl-kicker::before { content: ""; width: 18px; height: 2px; border-radius: 2px; background: currentColor; }
 .sl-sec-title { margin: var(--space-3) 0 0; font-size: clamp(30px, 5.6vw, 54px); line-height: 1.12; font-weight: 500; letter-spacing: -.03em; text-wrap: balance; }
-.sl-serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: 0; font-size: 1.08em; color: var(--sun); white-space: nowrap; }
+.sl-serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: 0; font-size: 1.08em; color: var(--sun); white-space: normal; }
 .sl-sec-lead { margin: var(--space-3) 0 0; max-width: 640px; color: var(--ink-2); font-size: 16px; line-height: 1.65; }
 
 /* Work card (Studio) */
@@ -364,4 +365,7 @@ body { margin: 0; font: 400 15px/1.6 var(--font-sans); background: var(--ground)
 .sl-work-meta span { font-size: 13px; color: var(--ink-2); }
 @media (hover: hover) { .sl-work:hover { border-color: var(--outline); transform: translateY(-3px); } }
 
-@media (prefers-reduced-motion: reduce) { .sl-btn, .sl-work { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .sl-btn, .sl-work { transition: none; }
+  .sl-btn-light:hover, .sl-btn-ghost:hover, .sl-btn-sun:hover, .sl-work:hover { transform: none; }
+}

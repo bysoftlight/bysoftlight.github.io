@@ -49,7 +49,7 @@ description: ระบบออกแบบ softlight design สำหรับ�
 - ปุ่ม: `sl-btn` + `sl-btn-primary` (หนึ่งปุ่มต่อหน้าจอ) · `sl-btn-outline` · `sl-btn-danger` · `sl-btn-text` · `sl-btn-chip` · `sl-btn-block` · Studio `sl-btn-sun` (+ `<span class="sl-arrow">`) `sl-btn-light` `sl-btn-ghost`
 - ฟอร์ม: `sl-label` `sl-input` (`aria-invalid="true"`) `sl-input-code` `sl-hint` (`is-error`)
 - โครง: `sl-card` `sl-card-title` `sl-card-studio` `sl-tiles` `sl-tile`
-- สถานะ: `sl-chip` (`is-ok` `is-warn` `is-bad` `is-info`) · `sl-banner-warn|bad|ok|info` · `sl-meter` (`is-warn` `is-bad`) + `sl-meter-top`
+- สถานะ: `sl-chip` (`is-ok` `is-warn` `is-bad` `is-info`) · `sl-banner` + `sl-banner-warn|bad|ok|info` (ต้องใส่ทั้งคู่) · `sl-meter` (`is-warn` `is-bad`) + `sl-meter-top`
 - นำทาง: `sl-topbar` `sl-brand` `sl-topnav` (`sl-nav-cta`) · `sl-bottomnav` + `sl-nav-item` (`aria-current="page"`) · `sl-seg` (role tablist) · Studio `sl-pillnav`
 - อื่น ๆ: `sl-alert` (+ `sl-alert-icon` `sl-alert-actions`, ใช้ใน `<dialog>`) · `sl-avatar` (`-lg` `-xl`) · Studio `sl-kicker` `sl-sec-title` `sl-serif` `sl-sec-lead` `sl-work` (+ `-cover` `-badge` `-meta`)
 - ไอคอน: `<svg class="sl-ic"><use href="#i-ชื่อ"/></svg>` (20px · `sl-ic-16` ในชิป/คำแนะนำ)
@@ -66,7 +66,7 @@ description: ระบบออกแบบ softlight design สำหรับ�
 
 - มือถือก่อน · ห้ามหน้าเลื่อนแนวนอน · ป้ายปุ่ม/เมนู/ชิปอยู่บรรทัดเดียว (ย่อคำแทนการตัดบรรทัด) · คำภาษาไทยในตัวเน้นต้องไม่ถูกตัดกลางคำ
 - เป้าแตะ ≥44px · ช่องกรอก 16px · ทุกช่องมี label · โฟกัสคีย์บอร์ดเห็นชัด (2px `accent`)
-- ใส่ safe-area (`env(safe-area-inset-*)`) ที่แถบหัว/แถบล่าง · แถบหัว sticky ใช้ `top: env(safe-area-inset-top)`
+- ใส่ safe-area (`env(safe-area-inset-*)`) ที่แถบหัว/แถบล่าง · แถบหัว sticky ใช้ `top: 0` + `padding-top: env(safe-area-inset-top)` (พื้นแถบเติมช่องใต้แถบสถานะ ไม่ให้เนื้อหาลอดผ่าน)
 - Product ต้องดีทั้งโหมดสว่างและมืด · สถานะบอกด้วยไอคอน/คำ ไม่ใช่สีอย่างเดียว
 - การเคลื่อนไหวสั้น (.15–.32s) และปิดเมื่อ `prefers-reduced-motion`
 - ห้าม: ไล่สีม่วง-น้ำเงิน แถบสีด้านซ้ายการ์ด เงาทุกการ์ด อีโมจิเป็นไอคอน วาดโลโก้ใหม่ ใช้โลโก้ลูกค้าเป็นของ softlight
